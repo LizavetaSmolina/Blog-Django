@@ -1,0 +1,76 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+      <div class="row" style="margin: 0px;">
+        <div class="col-1-5" style="width: 15%; float: left; ">
+            {% if post_cont.author  ==  user %}
+            <p style="text-align: left;">
+                    <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                       <a style = "text-decoration: none;" href="/delete_post/{{post.id}}"> Usuń post </a>
+                    </button>
+            </p>
+            <p style="text-align: left;">
+                    <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                        <a style = "text-decoration: none; text-align: left;" href="/edite_post/{{post.id}}"> Edytuj post </a>
+                    </button>
+            </p>
+
+            {% if post_cont.password  %}
+            <p style="text-align: left;">
+                    <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                        <a style = "text-decoration: none; text-align: left;" href="/edite_password/{{post.id}}"> Zmień hasło </a>
+                    </button>
+            </p>
+            {% endif %}
+
+            {% endif %}
+
+            <p style="text-align: left;">
+                    <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                        <a style = "text-decoration: none; text-align: left;" href="/blog/{{blog.id}}"> Blog: {{ blog.title }} </a>
+                    </button>
+            </p>
+        </div>
+        <div class="col-3-5" style="width: 85%; float: left; margin-left: 0px; ">
+
+            <h2>{{ post_cont.title }}</h2>
+            <p style="color: red">published: {{ post_cont.date }}</p>
+            <p style="margin-top: 20px;">{{ post_cont.text }}</p>
+            {% if post_cont.file %}
+            <img src="/media/{{ post_cont.file }}" alt="image" width="400" height="500"/>
+            {% endif %}
+            <hr>
+            <h2 style = "margin-top: 50px;">
+            <svg class="bi bi-chat-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            </svg>
+            Komentarze
+            </h2>
+
+            <form method="POST" action = {% url 'add_comment' pk=post.id %} style="margin-top: 10px;margin-bottom: 30px;">
+              {% csrf_token %}
+              <div class="form-group">
+                <label>Miejsce na Twój komentarz:</label>
+                <input class="form-control" type="text" name="text" stule="border-radius: 4px;"/>
+              </div>
+              <script src='https://www.google.com/recaptcha/api.js'></script>
+              <div style="margin-top: 15px; margin-bottom: 15px;" class="g-recaptcha" data-sitekey="6LfUOKQZAAAAAITmAh2Reju0k1N_f1A3zBtV6J-u"></div>
+              <button type="submit" class="btn btn-success" name="" value="Send">Dodać</button>
+            </form>
+
+
+            {% if comments.count > 0 %}
+            <table>
+                {% for c in comments %}
+                <h3>{{ c.author }}</h3>
+                <p style="margin-top: 10px; color: red;">published: {{ c.date }}</p>
+                <p>{{ c.text }}</p>
+                <hr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        <div class="col-4-5" style="width: 85%; float: left; margin-left: 0px;></div>
+      </div>
+{% endblock %}

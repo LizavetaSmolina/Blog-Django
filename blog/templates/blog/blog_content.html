@@ -1,0 +1,66 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+      <div class="row" style="margin: 0px;">
+        <div class="col-1-5" style="width: 15%; float: left; ">
+
+            {% if  blog.author  ==  user  %}
+            <p style="text-align: left;">
+              <button style="width: 50%;" type="button" class="btn btn-outline-warning" name="button" style="text_decoration: none">
+                <a style = "text-decoration: none; text-align: left;" href="{% url 'create_post' pk=blog.id %}"> Dodaj post </a>
+              </button>
+            </p>
+
+            <p style="text-align: left;">
+              <button style="width: 50%;" type="button" class="btn btn-outline-warning" name="button">
+                <a style = "text-decoration: none; text-align: left;" href="{% url 'blog'%}"> Lista blogów </a>
+              </button>
+            </p>
+
+            <p style="text-align: left;">
+                <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                    <a style = "text-decoration: none; text-align: left;" href="/delete_blog/{{blog.id}}"> Usuń blog </a>
+                </button>
+            </p>
+
+            <p style="text-align: left;">
+                <button style="width: 50%;" class="btn btn-outline-warning" type="button">
+                    <a style = "text-decoration: none; text-align: left;" href="/edite_blog/{{blog.id}}"> Edytuj blog </a>
+                </button>
+            </p>
+
+
+            {% endif %}
+        </div>
+        <div class="col-4-5" style="width: 85%; float: left; margin-left: 0px; ">
+            <h1>Blog: {{ blog.title }}</h1>
+            <h5>Author: {{ blog.author }}</h3>
+            <h5>Kategoria: {{ blog.category }}</h3>
+
+            {% if posts.count > 0 %}
+            <table>
+                {% for posts in posts %}
+                <h2  style="margin-top: 100px"><a href="{% url 'post_password' pk=posts.id %}">{{ posts.title }}</a>
+                {% if posts.password %}
+                    <svg class="bi bi-lock" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                     <path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                    </svg>
+                {% endif %}
+                </h2>
+                <p>{{ posts.description }}</p>
+                <p style="color: red">published: {{ posts.date }}</p>
+                <hr>
+                {% endfor %}
+            </table>
+            {% endif %}
+
+            {% if posts.count == 0 %}
+            <h2 style="margin-top: 100px; color: red;">Brak postów!</h2>
+
+            {% endif %}
+        </div>
+      </div>
+
+
+{% endblock %}

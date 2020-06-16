@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="row" style="margin: 0px;">
+        <div class="col-1-5" style="width: 15%; float: left; ">
+            <p style="text-align: left">
+              <button tyle="width: 50%" type="button" class="btn btn-outline-warning" name="button">
+                <a style="text-decoration:none" href="/create_blog/"> Utworz bloga </a>
+              </button>
+            </p>
+        </div>
+        <div class="col-4-5" style="width: 85%; float: left; margin-left: 0px; ">
+            {% if blogs.count > 0 %}
+            <h1 style="width: 800px; margin-top: 5px; margin-bottom: 50px;">Twoje blogi</h2>
+            <table>
+                {% for blog in blogs %}
+                <h2><a href="{% url 'blog_content' pk=blog.id %}">{{ blog.title }}</a></h2>
+                <p>{{ blog.category|linebreaksbr }}</p>
+                <p style="color: red">data utworzenia: {{ blog.date }}</p>
+                <hr>
+                {% endfor %}
+            </table>
+            {% endif %}
+
+            {% if blogs.count == 0 %}
+            <h2>Nie masz jeszcze stworzonych blogów!</h2>
+            {% endif %}
+        </div>
+     </div>
+
+{% endblock %}

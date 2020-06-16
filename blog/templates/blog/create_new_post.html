@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <div class="container" style="width: 600px; margin-top: 100px">
+
+    <div class="container-fluid text-center">
+        <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 900;">Stworzenie nowego postu</h1>
+    </div>
+
+
+        <form method="post" action="{% url 'create_post' blog.id %}" enctype="multipart/form-data" style="margin-top: 30px;">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Nazwa</label>
+            <textarea style="resize: none;" class="form-control" rows="1" type="text" name="title" aria-describedby="basic-addon1"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Opis</label>
+            <textarea class="form-control" rows="1" type="text" name="description" aria-describedby="basic-addon1"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Treść</label>
+            <textarea class="form-control" rows="8" type="text" name="text" aria-describedby="basic-addon1"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Hasło</label>
+            <textarea style="resize: none;" class="form-control" rows="1" type="text" name="password" aria-describedby="basic-addon1"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for "file" style="font-family: 'Montserrat', sans-serif;">Dodać plik</label>
+            <input type="file" name="file" class="form-control-file" aria-describedby="basic-addon1"/>
+        </div>
+
+        <button type="submit" class="btn btn-success" value="Send">Dodać post</button>
+
+        </form>
+
+
+    </div>
+
+{% endblock %}

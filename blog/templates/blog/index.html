@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <div class="row" style="margin: 0px;">
+        <div class="col-1-5" style="width: 15%; float: left; ">
+            <p style="text-align: left">
+                <button style="width: 50%;" class="btn btn-outline-warning" type="button" name="button">
+                    <a style = "text-decoration: none; text-align: left;" href="/log_out"> Log out </a>
+                </button>
+            </p>
+            {% if user.username == 'admin' %}
+            <p style="text-align: left">
+                <button style="width: 50%;" class="btn btn-outline-warning" type="button" name="button">
+                    <a style = "text-decoration: none; text-align: left;" href="/admin"> Admin </a>
+                </button>
+            </p>
+            {% endif %}
+        </div>
+        <div class="col-4-5" style="width: 85%; float: left; margin-left: 0px; ">
+            <h1>Witamy!</h1>
+            {% if user.is_authenticated %}
+            <h2>Dzień dobry, {{ user.username }}!</h2>
+            <p>Stwórz niepowtarzalnego, pięknego bloga. To proste i nic nie kosztuje!</p>
+            {% else %}
+            <h2>Register or Login if you'd like to</h2>
+            {% endif %}
+        </div>
+      </div>
+
+{% endblock %}

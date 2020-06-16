@@ -1,0 +1,66 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if registered %}
+
+      <h1>Dziękujemy za dokonanie rejestracji!</h1>
+      <p style="text-align: left">
+        <button type="button" name="button" class="btn btn-success">
+          <a style="text-decoration: none; color: white;" href="/log_in"> Log In
+        </button>
+      </p>
+
+    {% else %}
+<form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="container" style="width: 600px; margin-top: 100px">
+
+      <div class="container-fluid text-center">
+        <h1 style="font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 900;">Zarejestrować się</h1>
+      </div>
+
+      <div class="input-group mb-3" style="margin-top: 30px">
+        <input type="text" name="{{ user_form.username.name }}" class="form-control" autocomplete="off" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
+        {% if user_form.username.value != None %} value="{{ user_form.username.value|stringformat:'s' }}"{% endif %}
+        maxlength="{{ user_form.username.max_length }}"
+        {% if user_form.username.field.required %}required{% endif %}>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="password" name="{{ user_form.password.name }}" class="form-control" placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1"
+        {% if user_form.password.value != None %} value="{{ user_form.password.value|stringformat:'s' }}"{% endif %}
+        maxlength="{{ user_form.password.max_length }}"
+        {% if user_form.password.field.required %}required{% endif %}>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1" style="font-family: 'Montserrat', sans-serif;">Email address</label>
+        <input type="email" name="{{ user_form.email.name }}" class="form-control" placeholder="imię@wzór.com" id="exampleFormControlInput1"
+        {% if user_form.email.value != None %} value="{{ user_form.email.value|stringformat:'s' }}"{% endif %}
+        maxlength="{{ user_form.email.max_length }}"
+        {% if user_form.email.field.required %}required{% endif %}>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1" style="font-family: 'Montserrat', sans-serif;">Bio</label>
+        <textarea name="{{ profile_form.bio.name }}" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Imię, Nazwisko, płeć"
+        {% if profile_form.bio.value != None %} value="{{ profile_form.bio.value|stringformat:'s' }}"{% endif %}
+        maxlength="{{ profile_form.bio.max_length }}"
+        {% if profile_form.bio.field.required %}required{% endif %}></textarea>
+      </div>
+
+        <div class="form-group">
+          <label style="font-family: 'Montserrat', sans-serif;">Example file input</label>
+          <p>{{ profile_form.photo }}</p>
+        </div>
+
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <div style="margin-top: 15px; margin-bottom: 15px;" class="g-recaptcha" data-sitekey="6LfUOKQZAAAAAITmAh2Reju0k1N_f1A3zBtV6J-u"></div>
+
+      <button type="submit" class="btn btn-success" value="Register">Założyć konto</button>
+
+    </div>
+</form>
+
+    {% endif %}
+{% endblock %}

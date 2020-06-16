@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <div class="container" style="width: 800px; margin-top: 100px; decoration: none;">
+    <div class="container-fluid" style="text-align: center">
+      <h1 style="font-family: 'Montserrat', sans-serif;; font-size: 3rem; font-weight: 900">Wejście do OtoBlog</h1>
+    </div>
+    <form method="post" action="{% url 'log_in' %}" style="margin-top: 30px;">
+    {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <textarea style="resize: none;" class="form-control" rows="1" type="text" name="username" aria-describedby="basic-addon1"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input type="password" name="password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Zalogować się</button>
+    </form>
+  </div>
+
+  <div class="container" style="width: 800px; margin-top: 50px; decoration: none; ">
+
+    <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 700;">Nie masz konta?</h2>
+    <h5 style="font-family: 'Montserrat', sans-serif; font-weight: 500;">Utwórz nowe konto! To szybkie i proste.</h5>
+
+    <button type="button" class="btn btn-success"> <a style="text-decoration: none; color: white;" href="/sign_up/"> Założyć nowe konto</a></button>
+
+  </div>
+
+{% endblock %}
+

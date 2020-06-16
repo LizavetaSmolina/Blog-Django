@@ -1,0 +1,59 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <div class="row" style="margin: 0px;">
+        <div class="col-1-5" style="width: 20%; float: left; ">
+        <form method="POST" action = {% url 'search_form' %} enctype="multipart/form-data" style="margin-top: 30px;width: 80%;">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Nazwa</label>
+            <input  autocomplete="off" class="form-control" type="text" name="title" aria-describedby="basic-addon1"/>
+        </div>
+        <div class="form-group">
+            <label>Autor</label>
+            <input  autocomplete="off" class="form-control" type="text" name="author" aria-describedby="basic-addon1"/>
+        </div>
+        <div class="form-group">
+            <label>Data</label>
+            <input  autocomplete="off" class="form-control" type="date" name="date" aria-describedby="basic-addon1"/>
+        </div>
+        <button type="submit" class="btn btn-success" value="Send">Szukaj post</button>
+        </form>
+
+        </div>
+        <div class="col-3-5" style="width: 40%; float: left; margin-left: 0px; ">
+
+            <h1 style="width: 800px; margin-top: 5px; margin-bottom: 20px;">Wyniki wyszukiwania: </h1>
+                {% if search == 'all' %}
+                <h3 style="margin-top=10px;">Nie udało się odnależć post o określonych kryteriach.</h3>
+                <p style="color: red; margin-bottom=15px;" >Aby wyszukać okreslony post, trzeba wprowadzić poprawne dane.</p>
+                {% endif %}
+
+                {% if posts.count > 0 %}
+                <div class="contener">
+                    {% for post in posts %}
+                    <div class="jumbotron" style="padding: 7px;">
+                      <h6>{{ post.title }}</h6>
+                      <p class="lead">{{ post.description|linebreaksbr }}</p>
+                      <hr class="my-2" style="margin: 0px;">
+                      <p style="color: red; ">published: {{ post.date }}</p>
+                      <p>Autor: {{ post.author }}</p>
+                      <a class="btn btn-success" href="{% url 'post_password' pk=post.id %}" role="button">Czytać dalej</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h3 style="margin-top=10px;">Nie udało się odnależć post o określonych kryteriach.</h3>
+                <p style="color: red; margin-bottom=15px;" >Aby znaleźć interesujący post, trzeba wprowadzić poprawne dane.</p>
+            {% endif %}
+        </div>
+
+        <div class="col-1-5" style="width: 20%; float: left; margin-left: 0px; ">
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
